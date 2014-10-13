@@ -24,6 +24,9 @@ before 'deploy:setup', 'rvm:install_rvm', 'rvm:install_ruby'
 after 'deploy:finalize_update', :roles => :app do
   run "rm -f #{current_release}/config/database.yml"
   run "ln -s #{deploy_to}/shared/config/database.yml #{current_release}/config/database.yml"
+
+  run "rm -f #{current_release}/config/secrets.yml"
+  run "ln -s #{deploy_to}/shared/config/secrets.yml #{current_release}/config/secrets.yml"
 end
 
 after 'deploy:restart', 'unicorn:restart'
